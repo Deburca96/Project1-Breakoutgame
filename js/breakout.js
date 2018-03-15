@@ -104,6 +104,7 @@ function draw() {
 
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
+document.addEventListener("mousemove", mouseMoveHandler, false);
 
 function keyDownHandler(e) {
 	if(e.keyCode == 39) {
@@ -148,6 +149,12 @@ function drawScore() {
 	ctx.fillStyle = "#0095DD";
 	ctx.fillText("Score: "+score, 8, 20);
 	document.getElementById("gamescore").innerHTML = "Score: " + score;
+}
+function mouseMoveHandler(e) {
+	var relativeX = e.clientX - canvas.offsetLeft;
+	if(relativeX > 0 && relativeX < canvas.width) {
+		paddleX = relativeX - paddleWidth/2;
+	}
 }
 
 setInterval(draw,10);
