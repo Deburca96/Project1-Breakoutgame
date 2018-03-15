@@ -5,9 +5,9 @@ var ballRadius = 10;
 var paddleHeight = 10;
 var paddleWidth = 75;
 var paddleX = (canvas.width-paddleWidth)/2;
-var brickRowCount = 3;
-var brickColumnCount = 5;
-var brickWidth = 75;
+var brickRowCount = 4;
+var brickColumnCount = 6;
+var brickWidth = 62;
 var brickHeight = 20;
 var brickPadding = 10;
 var brickOffsetTop = 30;
@@ -16,7 +16,7 @@ var x = canvas.width/2;
 var y = canvas.height-30;
 var dx = 2;
 var dy = -2;
-var ballColour = "#0095DD";
+var ballColour = "green";
 var rightPressed = false;
 var leftPressed = false;
 
@@ -53,7 +53,7 @@ function drawBricks() {
 			bricks[c][r].y = brickY;
 			ctx.beginPath();
 			ctx.rect(brickX, brickY, brickWidth, brickHeight);
-			ctx.fillStyle = "#0095DD";
+			ctx.fillStyle = "pink";
 			ctx.fill();
 			ctx.closePath;
 		}
