@@ -14,7 +14,6 @@ var ballColour = "#0095DD";
 var rightPressed = false;
 var leftPressed = false;
 
-
 function drawBall() {
 	ctx.beginPath();
 	ctx.arc(x, y, ballRadius, 0, Math.PI*2);
@@ -22,7 +21,6 @@ function drawBall() {
 	ctx.fill();
 	ctx.closePath();
 }
-
 
 function drawPaddle() {
 	ctx.beginPath();
@@ -38,7 +36,6 @@ function draw() {
 	drawPaddle();
 	x += dx;
 	y += dy;
-	
 	if(x + dx > canvas.width-ballRadius || x+dx < ballRadius) {
 		dx = -dx;
 	}
@@ -46,15 +43,20 @@ function draw() {
 	if(y + dy < ballRadius) {
 		dy = -dy;
 	} else if(y + dy > canvas.height-ballRadius) {
+		
+		if(x > paddleX && x < paddleX + paddleWidth) {
+			dy = -dy;
+		}
+		else{
 		alert("GAME OVER");
 		document.location.reload();
-	}
-	
-	if(rightPressed && paddleX < canvas.width-paddleWidth) {
-		paddleX += 15;
+		}
+	}	
+		if(rightPressed && paddleX < canvas.width-paddleWidth) {
+		paddleX += 5;
 	}
 	else if(leftPressed && paddleX > 0) {
-		paddleX -= 15;
+		paddleX -= 5;
 	}
 }
 
@@ -82,5 +84,6 @@ function keyUpHandler(e) {
 
 
 setInterval(draw,10);
+
 
 
