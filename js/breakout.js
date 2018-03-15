@@ -1,3 +1,4 @@
+
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
 var ballRadius = 10;
@@ -9,10 +10,9 @@ var y = canvas.height-30;
 var dx = 2;
 var dy = -2;
 var ballColour = "#0095DD";
+
 var rightPressed = false;
 var leftPressed = false;
-
-
 
 
 function drawBall() {
@@ -22,6 +22,7 @@ function drawBall() {
 	ctx.fill();
 	ctx.closePath();
 }
+
 
 function drawPaddle() {
 	ctx.beginPath();
@@ -37,7 +38,7 @@ function draw() {
 	drawPaddle();
 	x += dx;
 	y += dy;
-
+	
 	if(y + dy > canvas.height-ballRadius || y+dy < ballRadius) {
 		dy = -dy;
 		
@@ -48,10 +49,10 @@ function draw() {
 	}
 	
 	if(rightPressed && paddleX < canvas.width-paddleWidth) {
-		paddleX += 8;
+		paddleX += 5;
 	}
 	else if(leftPressed && paddleX > 0) {
-		paddleX -= 8;
+		paddleX -= 5;
 	}
 }
 
@@ -59,23 +60,22 @@ document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 
 function keyDownHandler(e) {
-	if(e.keyCode == 37) {
+	if(e.keyCode == 39) {
 		rightPressed = true;
 	}
-	else if(e.keyCode == 36) {
+	else if(e.keyCode == 39) {
 		leftPressed = true;
 	}
 }
 
 function keyUpHandler(e) {
-	if(e.keyCode == 37) {
+	if(e.keyCode == 39) {
 		rightPressed = false;
 	}
-	else if(e.keyCode == 36) {
+	else if(e.keyCode == 39) {
 		leftPressed = false;
 	}
 }
-
 
 
 
