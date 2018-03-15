@@ -5,9 +5,9 @@ var ballRadius = 10;
 var paddleHeight = 10;
 var paddleWidth = 75;
 var paddleX = (canvas.width-paddleWidth)/2;
-var brickRowCount = 4;
-var brickColumnCount = 6;
-var brickWidth = 62;
+var brickRowCount = 3;
+var brickColumnCount = 5;
+var brickWidth = 75;
 var brickHeight = 20;
 var brickPadding = 10;
 var brickOffsetTop = 30;
@@ -16,11 +16,9 @@ var x = canvas.width/2;
 var y = canvas.height-30;
 var dx = 2;
 var dy = -2;
-var ballColour = "green";
+var ballColour = "#0095DD"
 var rightPressed = false;
 var leftPressed = false;
-
-
 var bricks = [];
 for(c=0; c<brickColumnCount; c++) {
 	bricks[c] = [];
@@ -29,7 +27,9 @@ for(c=0; c<brickColumnCount; c++) {
 	}
 }
 
-//draw ball
+var score = 0;
+
+
 function drawBall() {
 	ctx.beginPath();
 	ctx.arc(x, y, ballRadius, 0, Math.PI*2);
@@ -38,7 +38,7 @@ function drawBall() {
 	ctx.closePath();
 }
 
-//draw paddle
+
 function drawPaddle() {
 	ctx.beginPath();
 	ctx.rect(paddleX, canvas.height-paddleHeight, paddleWidth, paddleHeight);
@@ -69,12 +69,12 @@ function draw() {
 	ctx.clearRect(0,0,canvas.width,canvas.height);
 	drawBall();
 	drawPaddle();
+	drawScore();
 	collisionDetect();
 	drawBricks();
 	x += dx;
 	y += dy;
 	
-	//making ball bounce
 	if(x + dx > canvas.width-ballRadius || x+dx < ballRadius) {
 		dx = -dx;
 	}
@@ -87,16 +87,15 @@ function draw() {
 			dy = -dy;
 		}
 		else{
-		alert("GAME OVER");
-		document.location.reload();
-		drawBall();
+			alert("GAME OVER");
+			document.location.reload();
 		}
 	}	
 		if(rightPressed && paddleX < canvas.width-paddleWidth) {
-		paddleX += 4;
+		paddleX += 6;
 	}
 	else if(leftPressed && paddleX > 0) {
-		paddleX -= 4;
+		paddleX -= 6;
 	}
 }
 
@@ -129,11 +128,18 @@ function collisionDetect() {
 				if(x>b.x && x<b.x+brickWidth && y>b.y && y<b.y+brickHeight) {
 					dy = -dy;
 					b.status = 0;
+					score++;
 				}
 			}
 		}
 	}
 }
 
-//calls draw function every 10ms
-setInterval(draw,15);
+function drawScore() {
+	ctx.font = "16px Ariel";
+	ctx.fillStyle = "#0095DD";
+	ctx.fillText("Score: "+score, 8, 20);
+	document.getElementById("gamescore").innerHTML = "Score: " + score;
+}
+
+setInterval(draw,10);
