@@ -1,10 +1,13 @@
 
+//setting up the canvas
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
 var ballRadius = 10;
+// setting the paddle variables
 var paddleHeight = 10;
 var paddleWidth = 75;
 var paddleX = (canvas.width-paddleWidth)/2;
+// setting brick variables
 var brickRowCount = 4;
 var brickColumnCount = 6;
 var brickWidth = 60;
@@ -12,6 +15,7 @@ var brickHeight = 20;
 var brickPadding = 10;
 var brickOffsetTop = 30;
 var brickOffsetLeft = 30;
+//setting the startpoint
 var x = canvas.width/2;
 var y = canvas.height-30;
 var dx = 2;
@@ -27,12 +31,16 @@ for(c=0; c<brickColumnCount; c++) {
 		bricks[c][r] = { x:0, y:0, status:1};
 	}
 }
+
 var score = 0;
+//adding lives
 var lives = 3;
+
+// adding sounds
 var winningSound = new Audio('sounds/woohoo.wav');
 var scoreSound = new Audio('sounds/success.wav');
 var gameOverSound = new Audio('sounds/gameover.wav');
-
+// function to draw the ball 
 function drawBall() {
 	ctx.beginPath();
 	ctx.arc(x, y, ballRadius, 0, Math.PI*2);
@@ -40,7 +48,7 @@ function drawBall() {
 	ctx.fill();
 	ctx.closePath();
 }
-
+//function to draw the paddle 
 function drawPaddle() {
 	ctx.beginPath();
 	ctx.rect(paddleX, canvas.height-paddleHeight, paddleWidth, paddleHeight);
@@ -48,7 +56,7 @@ function drawPaddle() {
 	ctx.fill();
 	ctx.closePath();
 }
-
+//function to draw the bricks
 function drawBricks() {
 	for(c=0; c<brickColumnCount; c++) {
 		for(r=0; r<brickRowCount; r++) {
@@ -66,7 +74,7 @@ function drawBricks() {
 		}
 	}
 }
-
+// function to moove ball
 function draw() {
 	ctx.clearRect(0,0,canvas.width,canvas.height);
 	drawBall();
@@ -77,7 +85,7 @@ function draw() {
 	drawBricks();
 	x += dx;
 	y += dy;
-	
+	// if statements to bounce ball 
 	if(x + dx > canvas.width-ballRadius || x+dx < ballRadius) {
 		dx = -dx;
 	}
@@ -89,7 +97,7 @@ function draw() {
 		if(x > paddleX && x < paddleX + paddleWidth) {
 			dy = -dy;
 		}
-		
+		// game over alert
 				else {
 					lives--;
 					if(!lives) {
@@ -117,7 +125,7 @@ function draw() {
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 document.addEventListener("mousemove", mouseMoveHandler, false);
-
+// moving the paddle 
 function keyDownHandler(e) {
 	if(e.keyCode == 39) {
 		rightPressed = true;
@@ -134,7 +142,7 @@ function keyUpHandler(e) {
 		leftPressed = false;
 	}
 }
-
+// ball bouncing off the bricks
 function collisionDetect() {
 	for(c=0; c<brickColumnCount; c++) {
 		for(r=0; r<brickRowCount; r++) {
@@ -155,24 +163,26 @@ function collisionDetect() {
 		}
 	}
 }
-
+// fuction for the score
 function drawScore() {
 	ctx.font = "16px Ariel";
 	ctx.fillStyle = "#0095DD";
 	ctx.fillText("Score: "+score, 8, 20);
 	document.getElementById("gamescore").innerHTML = "Score: " + score;
 }
+// function for lives
 function drawLives() {
 	ctx.font = "16px Ariel";
 	ctx.fillStyle = "#0095DD";
 	ctx.fillText("Lives: "+lives, canvas.width-65, 20);
 	document.getElementById("gamelives").innerHTML = "Lives: "+lives;
 }
+// function to move paddle with mouse
 function mouseMoveHandler(e) {
 	var relativeX = e.clientX - canvas.offsetLeft;
 	if(relativeX > 0 && relativeX < canvas.width) {
 		paddleX = relativeX - paddleWidth/2;
 	}
 }
-
+// recall every 10 ms
 setInterval(draw,10);
